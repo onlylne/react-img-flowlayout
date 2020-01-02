@@ -2,7 +2,10 @@
 基于react的图片流式布局组件，瀑布流自适应布局
 
 ### 本地演示
-git clone 'project path'
+
+```
+git clone `project path`
+```
 
 ```
 npm i
