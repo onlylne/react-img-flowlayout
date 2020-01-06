@@ -4,9 +4,11 @@ import styles from './index.css';
 
 interface Props {
   containerWidth?: string,
+  containerHeight?: string,
   columns: number,
   gutter?: number,
   imgMgb?: number,
+  toBottom?: () => void,
   dataSource: Array<string>,
 }
 
@@ -15,11 +17,13 @@ export default class ImgFlowLayout extends React.PureComponent<Props> {
   heights: Array<number>;
   imgs: Array<Array<JSX.Element>>;
   dataSource: Array<string>;
+  contentRef: React.RefObject<HTMLDivElement>;
   constructor(props: Props) {
     super(props);
     this.crefs = Array.from({ length: props.columns }, () => React.createRef());
     this.heights = Array.from({ length: props.columns }, () => 0);
     this.imgs = Array.from({ length: props.columns }, () => []);
+    this.contentRef = React.createRef();
     this.dataSource = [];
   }
 
@@ -29,6 +33,14 @@ export default class ImgFlowLayout extends React.PureComponent<Props> {
 
   componentDidUpdate() {
     this.updateImg();
+  }
+
+  scrollChange = () => {
+    if (!this.contentRef.current) return;
+    if(this.contentRef.current.scrollTop + this.contentRef.current?.clientHeight === this.contentRef.current?.scrollHeight) {
+      const {toBottom = () => {}} = this.props;
+      toBottom();
+    }
   }
 
   getMinIndex = () => {
@@ -94,10 +106,14 @@ export default class ImgFlowLayout extends React.PureComponent<Props> {
   }
 
   render() {
-
+    const { containerWidth = '100%', containerHeight = '100vh' } = this.props;
+    const style = {
+      width: containerWidth,
+      height: containerHeight,
+    }
     return (
       <>
-        <div className={styles.img__layout}>
+        <div className={styles.img__layout} style={style} ref={this.contentRef} onScrollCapture={this.scrollChange}>
           {this.renderColumns()}
         </div>
       </>
