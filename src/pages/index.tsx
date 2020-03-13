@@ -59,7 +59,7 @@ export default function () {
   const [dataSource, setDataSource] = useState<Array<string>>([]);
   const [page, setPage] = useState<number>(0);
 
-  const lookmore = (page: number = 0, size: number = 20) => {
+  const lookmore = (page: number = 0, size: number = 14) => {
     const newdata = imgSource.slice(page * size, (page + 1) * size);
     const data = dataSource.concat(newdata);
     setDataSource(data);
@@ -69,10 +69,6 @@ export default function () {
     lookmore(page);
   }, [page])
 
-  // const pageChange = (e: React.MouseEvent<HTMLAnchorElement>) => {
-  //   setPage(page + 1); e.preventDefault()
-  // }
-
   const toBottom = () => {
     console.log('到底了，做点什么吧')
     setPage(page + 1);
@@ -80,8 +76,7 @@ export default function () {
 
   return (
     <div className={styles.normal}>
-      <ImgFlowLayout columns={5} dataSource={dataSource} toBottom={toBottom} />
-      {/* <a href="#" onClick={pageChange}>加载更多</a> */}
+      <ImgFlowLayout columns={6} dataSource={dataSource} toBottom={toBottom} />
     </div>
   );
 }
