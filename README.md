@@ -36,3 +36,5 @@ umijs 快速搭建的架子
 | toBottom | 滚动到底部的回调 | void 非必传 |
 | dataSource | 图片资源 | Array&lt;string&gt; |
 
+
+![Image](https://github.com/onlylne/react-img-flowlayout/blob/master/src/assets/img.png)
